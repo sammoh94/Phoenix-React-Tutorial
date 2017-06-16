@@ -33,19 +33,17 @@ defmodule FritterApp.TweetController do
   end
 
   def update(conn, %{"tweet" => tweet_params, "user_id" => user_id, "id" => id}) do
-    changeset = Repo.get!(User, user_id)
-    |> assoc(:tweets)
-    |> Repo.get(id)
-    |> Tweet.changeset(tweet_params)
+    changeset =
+      Repo.get(Tweet, id)
+      |> Tweet.changeset(tweet_params)
+
     case Repo.update(changeset) do
       {:ok, tweet} ->
         conn
-        |> put_flash(:info, "Updated Tweet")
         |> put_status(201)
         |> send_resp(:no_content, "")
       {:error, changeset} ->
         conn
-        |> put_flash(:info, "Failed to update Tweet")
         |> send_resp(400, "")
     end
   end
@@ -59,7 +57,6 @@ defmodule FritterApp.TweetController do
     case Repo.insert(changeset) do
       {:ok, tweet} ->
         conn
-        |> put_flash(:info, "Created new Tweet.")
         new_tweet = tweet
         |> Map.from_struct
         |> Map.drop([:__meta__, :user])
@@ -73,7 +70,6 @@ defmodule FritterApp.TweetController do
     Repo.get!(Tweet, id)
     |> Repo.delete!()
     conn
-    |> put_flash(:info, "Post Deleted")
     |> put_status(201)
     |> send_resp(:no_content, "")
   end

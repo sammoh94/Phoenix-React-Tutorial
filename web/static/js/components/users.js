@@ -34,9 +34,9 @@ class UserList extends React.Component {
 
   render() {
     let all_users = this.props.users;
-    let user_html_elements = []
+    let userHtmlElements = []
     for (var i = 0; i < all_users.length; i++) {
-      user_html_elements.push(<tr key={all_users[i].id}>
+      userHtmlElements.push(<tr key={all_users[i].id}>
         <td>{all_users[i].name}</td>
         <td className="text-right"><Link to={"/app/users/"+all_users[i].id} className="btn btn-default btn-xs">Show</Link>
         <Link to={"/app/users"} className="btn btn-xs btn-danger" name={all_users[i].id} onClick={this.deleteUser}>Delete</Link></td></tr>);
@@ -51,7 +51,7 @@ class UserList extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {user_html_elements}
+            {userHtmlElements}
           </tbody>
         </table>
         <Link to={"/app"}>Back</Link>

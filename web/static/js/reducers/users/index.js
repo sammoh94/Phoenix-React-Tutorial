@@ -9,15 +9,9 @@ export default function allUsers(state=initialState, action={}) {
     return state.set("usersList", action.payload.users)
   } if (action.type === "USER_DELETED") {
     console.log("deleted user", action.payload);
-    let usersList = state.get("usersList");
-    console.log(usersList);
-    for (var i = 0; i < usersList.length; i++) {
-      if (usersList[i].id.toString() === action.payload) {
-        usersList.splice(i, 1);
-      }
-    }
-    console.log(usersList);
-    return state.set("usersList", usersList);
+    const usersList = state.get("usersList");
+    const newList = usersList.filter(user => user.id.toString() !== action.payload);
+    return state.set("usersList", newList);
   } else {
     return state
   }

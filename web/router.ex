@@ -19,7 +19,12 @@ defmodule FritterApp.Router do
   scope "/app", FritterApp do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/*anything", PageController, :index
+  end
+
+  # Other scopes may use custom stacks.
+  scope "/api", FritterApp do
+    pipe_through :api
     resources "/users", UserController, except: [:edit, :update]
     resources "/login", LoginController, only: [:new, :create]
 
@@ -29,9 +34,4 @@ defmodule FritterApp.Router do
       end
     end
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", FritterApp do
-  #   pipe_through :api
-  # end
 end

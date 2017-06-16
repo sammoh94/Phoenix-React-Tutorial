@@ -35,6 +35,13 @@ class EditTweet extends React.Component {
     this.setState({tweet: event.target.value});
   }
 
+  componentWillReceiveProps(props, nextProps) {
+    console.log("component will receive props", nextProps);
+    // if (nextProps.requestState === "success"){
+    //   this.props.history.push(url);
+    // }
+  }
+
   render() {
     if (this.props.submitted && !this.props.updated) {
       console.log("UPDATING TWEET");

@@ -11,9 +11,7 @@ export default function editTweet(state=initialState, action={}) {
   } else if (action.type === "TWEET_UPDATED") {
     return state.set("updated", action.payload)
   } else if (action.type === "RESET_STATE") {
-    state = state.set("updated", false)
-    state = state.set("submitted", false)
-    return state
+    return state.merge({"submitted": false, updated: false});
   } else {
     return state
   }

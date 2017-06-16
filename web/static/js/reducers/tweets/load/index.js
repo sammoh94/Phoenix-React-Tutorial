@@ -11,13 +11,8 @@ export default function userTweets(state=initialState, action={}) {
     return state.set("tweets", action.payload);
   } else if (action.type === "TWEET_DELETED") {
     console.log("tweet deleted");
-    let updatedTweets = state.get("tweets");
-    for (var i = 0; i < updatedTweets.length; i++) {
-      if (updatedTweets[i].id.toString() === action.payload) {
-        updatedTweets.splice(i, 1);
-      }
-    }
-    console.log(updatedTweets);
+    const oldTweetsList = state.get("tweets");
+    const updatedTweets = oldTweetsList.filter(tweet => tweet.id.toString() !== action.payload);
     return state.set("tweets", updatedTweets);
   } else {
     return state

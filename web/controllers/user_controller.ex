@@ -5,10 +5,7 @@ defmodule FritterApp.UserController do
 
   def index(conn, _params) do
     users = Repo.all(User)
-    users
-    |> Enum.map(fn(data) -> Poison.Encoder.encode(data, []) end)
-    |> Enum.join("\n")
-    render(conn, "index.json", users: users)
+    json(conn, %{users: users})
   end
 
   def new(conn, _params) do
@@ -21,12 +18,7 @@ defmodule FritterApp.UserController do
 
     case Repo.insert(changeset) do
       {:ok, user} ->
-        conn
-        |> put_flash(:info, "User created successfully.")
-        updated_user = user
-        |> Map.from_struct
-        |> Map.drop([:__meta__, :tweets])
-        render(conn, "create.json", id: user.id)
+        json(conn, %{id: user.id})
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -34,7 +26,7 @@ defmodule FritterApp.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Repo.get!(User, id) |> Map.from_struct() |> Map.drop([:__meta__, :tweets])
-    render(conn, "show.json", user: user)
+    json(conn, %{user: user})
   end
 
   def delete(conn, %{"id" => id}) do
@@ -42,7 +34,6 @@ defmodule FritterApp.UserController do
     |> Repo.delete!()
 
     conn
-    |> put_flash(:info, "User deleted successfully.")
     |> put_status(201)
     |> send_resp(:no_content, "")
   end

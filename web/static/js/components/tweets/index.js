@@ -13,8 +13,6 @@ const mapDispatchToProps = {
 
 function mapStateToProps(state) {
   return {
-    user: selectors.setUser(state),
-    userID: selectors.setUserID(state),
     tweets: selectors.getUserTweets(state)
   }
 }
@@ -24,6 +22,7 @@ class ShowUserTweets extends React.Component {
     super(props)
 
     this.deleteTweet = this.deleteTweet.bind(this);
+    this.renderTweet = this.renderTweet.bind(this);
   }
 
   deleteTweet(event) {
@@ -36,31 +35,31 @@ class ShowUserTweets extends React.Component {
     this.props.getUserTweets(this.props.match.params.user_id)
   }
 
+  renderTweet(tweet, idx) {
+    if (this.props.match.params.user_id !== tweet.user_id.toString()) return null;
+
+    var editUrl = `/app/users/${tweet.user_id}/tweets/${tweet.id}/edit`;
+    return (
+      <p key={idx}>{tweet.tweet}
+        <Link to={editUrl} className="btn btn-default btn-xs">Edit</Link>
+        <Link to={"/app/users/"+this.props.match.params.user_id+"/tweets"} className="btn btn-danger btn-xs" onClick={this.deleteTweet} name={tweet.id}>Delete</Link>
+      </p>
+    );
+  }
   render() {
-    let tweets = []
-    let userTweets = this.props.tweets;
-    for (var i=0; i<userTweets.length; i++) {
-      if (this.props.userID === userTweets[i].user_id.toString()) {
-        tweets.push(<p key={userTweets[i].id}>{userTweets[i].tweet}
-          <Link to={"/app/users/"+userTweets[i].user_id+"/tweets/"+userTweets[i].id+"/edit"} className="btn btn-default btn-xs">Edit</Link>
-          <Link to={"/app/users/"+this.props.userID+"/tweets"} className="btn btn-danger btn-xs" onClick={this.deleteTweet} name={userTweets[i].id}>Delete</Link>
-        </p>);
-      }
-    }
+    const userID = this.props.match.params.user_id
     return (
       <div className="tweet_container">
         <h1> My Tweets </h1>
-        {tweets}
-        <Link to={"/app/users/"+this.props.userID}>Back</Link><br />
-        <Link to={"/app/users/"+this.props.userID+"/tweets/new"}>Create New</Link>
+        {this.props.tweets.map(this.renderTweet)}
+          <Link to={`/app/users/${userID}`}>Back</Link><br />
+          <Link to={`/app/users/${userID}/tweets/new`}>Create New</Link>
       </div>
     )
   }
 }
 
 ShowUserTweets.propTypes = {
-  user: React.PropTypes.string,
-  userID: React.PropTypes.string,
   tweets: React.PropTypes.array,
 }
 
