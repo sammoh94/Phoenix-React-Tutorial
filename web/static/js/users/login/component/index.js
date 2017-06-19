@@ -34,30 +34,28 @@ class Login extends React.Component {
     this.setState({name: event.target.value});
   };
 
-  componentWillReceiveProps(props, nextProps) {
+  componentWillReceiveProps(nextProps) {
     console.log("received props", nextProps);
+    if (nextProps.userID) {
+      this.props.history.push(`/app/users/${nextProps.userID}`);
+    }
   }
 
   render() {
-    if (this.props.userID) {
-      this.props.history.push("/app/users/" + this.props.userID);
-      return null;
-    } else {
-      return (
-        <div className="login-container">
-          <div>
-            <h2>Sign In</h2>
-          </div>
-          <form onSubmit={this.onSubmit} >
-            <div className="form-group">
-              <input type="text" placeholder="Name" className="form-control" value={this.state.name} onChange={this.updateUserName}/>
-            </div>
-            <input type="submit" value="Sign in" className="btn btn-primary" />
-          </form>
-          <Link to={"/app"}>Back</Link>
+    return (
+      <div className="login-container">
+        <div>
+          <h2>Sign In</h2>
         </div>
-      )
-    }
+        <form onSubmit={this.onSubmit} >
+          <div className="form-group">
+            <input type="text" placeholder="Name" className="form-control" value={this.state.name} onChange={this.updateUserName}/>
+          </div>
+          <input type="submit" value="Sign in" className="btn btn-primary" />
+        </form>
+        <Link to={"/app"}>Back</Link>
+      </div>
+    )
   }
 }
 
