@@ -5,6 +5,7 @@ const resetState = function (reset) {
     payload: reset
   }
 }
+
 export default {
   resetState
 }

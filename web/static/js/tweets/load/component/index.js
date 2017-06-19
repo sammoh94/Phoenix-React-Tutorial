@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 import actions from "../actions";
 import * as selectors from "../selectors";
-import resetState from "../../../util-actions";
+import utilActions from "../../../util-actions";
 
 const mapDispatchToProps = {
   getUserTweets: actions.getUserTweets,
-  resetState: resetState,
+  resetState: utilActions.resetState,
   deleteTweet: actions.deleteTweet
 }
 
@@ -47,6 +47,7 @@ class ShowUserTweets extends React.Component {
       </p>
     );
   }
+  
   render() {
     const userID = this.props.match.params.user_id
     return (

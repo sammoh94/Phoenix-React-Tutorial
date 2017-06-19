@@ -8,4 +8,6 @@ export default [
   loadSaga,
   registerSaga,
   showSaga
-];
+].reduce(function (x, y) {
+  return x.concat(y)
+});

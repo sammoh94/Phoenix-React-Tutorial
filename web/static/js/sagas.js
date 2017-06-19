@@ -11,4 +11,5 @@ function createRootSaga(sagas) {
   };
 }
 
-export default createRootSaga([userSagas, tweetSagas]);
+const combinedSaga = userSagas.concat(tweetSagas);
+export default createRootSaga(combinedSaga);

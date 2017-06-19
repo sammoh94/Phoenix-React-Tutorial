@@ -6,4 +6,6 @@ export default [
   create,
   edit,
   load
-];
+].reduce(function (x, y) {
+  return x.concat(y)
+});
