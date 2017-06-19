@@ -18,6 +18,27 @@ import EditTweet      from "../tweets/edit/component";
 import CreateTweet    from "../tweets/create/component";
 
 export default class Routes extends React.Component {
+  renderUserRoutes() {
+    return (
+      <Switch>
+        <Route exact path="/app/users" component={UserList} />
+        <Route exact path="/app/users/new" component={Register} />
+        <Route exact path="/app/users/:id" component={ShowUser} />
+        <Route path="/app/users/:user_id/tweets">{this.renderTweetRoutes()}</Route>
+      </Switch>
+    )
+  }
+
+  renderTweetRoutes() {
+    return (
+      <Switch>
+        <Route exact path="/app/users/:user_id/tweets" component={ShowUserTweets} />
+        <Route exact path="/app/users/:user_id/tweets/:id/edit" component={EditTweet} />
+        <Route exact path="/app/users/:user_id/tweets/new" component={CreateTweet} />
+      </Switch>
+    )
+  }
+
   render() {
     return (
       <Router history={history}>
@@ -26,12 +47,7 @@ export default class Routes extends React.Component {
             <Switch>
               <Route exact path="/app" component={Landing} />
               <Route exact path="/app/login/new" component={Login} />
-              <Route exact path="/app/users" component={UserList} />
-              <Route exact path="/app/users/new" component={Register} />
-              <Route exact path="/app/users/:id" component={ShowUser} />
-              <Route exact path="/app/users/:user_id/tweets" component={ShowUserTweets} />
-              <Route exact path="/app/users/:user_id/tweets/:id/edit" component={EditTweet} />
-              <Route exact path="/app/users/:user_id/tweets/new" component={CreateTweet} />
+              <Route path="/app/users">{this.renderUserRoutes()}</Route>
             </Switch>
           </AppContainer>
         </Route>

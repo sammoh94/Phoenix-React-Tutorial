@@ -34,6 +34,10 @@ class Login extends React.Component {
     this.setState({name: event.target.value});
   };
 
+  componentWillReceiveProps(props, nextProps) {
+    console.log("received props", nextProps);
+  }
+
   render() {
     if (this.props.userID) {
       this.props.history.push("/app/users/" + this.props.userID);
