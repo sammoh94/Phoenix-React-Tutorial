@@ -5,16 +5,17 @@ import createHistory from "history/createBrowserHistory";
 
 const history = createHistory();
 
-// import components
 import AppContainer   from "../components";
-import Landing        from "../components/landing"
-import Login          from "../components/login";
-import Register       from "../components/register";
-import ShowUser       from "../components/show_user";
-import UserList       from "../components/users";
-import ShowUserTweets from "../components/tweets/";
-import EditTweet      from "../components/tweets/edit";
-import CreateTweet    from "../components/tweets/create";
+import Landing        from "../components/landing";
+// User views
+import Login          from "../users/login/component";
+import Register       from "../users/register/component";
+import ShowUser       from "../users/show/component";
+import UserList       from "../users/load/component";
+// Tweet views
+import ShowUserTweets from "../tweets/load/component/";
+import EditTweet      from "../tweets/edit/component";
+import CreateTweet    from "../tweets/create/component";
 
 export default class Routes extends React.Component {
   render() {
